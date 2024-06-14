@@ -12,6 +12,12 @@ class HomeLayout extends StatefulWidget {
 
 class _HomeLayoutState extends State<HomeLayout> with TickerProviderStateMixin {
   late final TabController _tabController;
+  bool textFieldVisibility = false;
+  bool enableSaveButton = false;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  DateTime? date;
+  TimeOfDay? time;
 
   @override
   void initState() {
@@ -62,10 +68,158 @@ class _HomeLayoutState extends State<HomeLayout> with TickerProviderStateMixin {
       ),
       floatingActionButton: _tabController.index == 0
           ? FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                customModalBottomSheet(context).whenComplete(
+                  () {
+                    textFieldVisibility = false;
+                    enableSaveButton = false;
+                  },
+                );
+              },
               child: const Icon(Icons.add_task_rounded),
             )
           : null,
+    );
+  }
+
+  Future<dynamic> customModalBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            return Padding(
+              padding: EdgeInsets.only(
+                  right: 25.0,
+                  left: 25.0,
+                  top: 25.0,
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  TextField(
+                    controller: nameController,
+                    autofocus: true,
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                      hintText: 'Task Name',
+                      border: InputBorder.none,
+                    ),
+                    onChanged: (value) {
+                      if (value.isNotEmpty && value.trim().isNotEmpty) {
+                        setModalState(
+                          () {
+                            enableSaveButton = true;
+                          },
+                        );
+                      } else {
+                        setModalState(
+                          () {
+                            enableSaveButton = false;
+                          },
+                        );
+                      }
+                    },
+                  ),
+                  Visibility(
+                    visible: textFieldVisibility,
+                    child: TextField(
+                      controller: descriptionController,
+                      autofocus: true,
+                      keyboardType: TextInputType.text,
+                      decoration: const InputDecoration(
+                        hintText: 'Description',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 25.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            GestureDetector(
+                              onTap: () {
+                                setModalState(
+                                  () {
+                                    textFieldVisibility = true;
+                                  },
+                                );
+                              },
+                              child: const Icon(
+                                Icons.description_rounded,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 20.0,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                showDatePicker(
+                                  context: context,
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime(DateTime.now().year + 1),
+                                  initialDate: DateTime.now(),
+                                ).then(
+                                  (value) => date = value,
+                                );
+                              },
+                              child: const Icon(
+                                Icons.calendar_month_rounded,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 20.0,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now(),
+                                ).then(
+                                  (value) => time = value,
+                                );
+                              },
+                              child: const Icon(
+                                Icons.watch_later_rounded,
+                              ),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Text(
+                            'Add',
+                            textAlign: TextAlign.end,
+                            style: TextStyle(
+                                color: enableSaveButton
+                                    ? Colors.blue.shade700
+                                    : Colors.grey,
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
