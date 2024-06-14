@@ -54,10 +54,10 @@ class _HomeLayoutState extends State<HomeLayout> with TickerProviderStateMixin {
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const <Widget>[
+        children: <Widget>[
           MyTasksScreen(),
-          CompletedTasksScreen(),
-          ArchivedTasksScreen(),
+          const CompletedTasksScreen(),
+          const ArchivedTasksScreen(),
         ],
       ),
       floatingActionButton: _tabController.index == 0
