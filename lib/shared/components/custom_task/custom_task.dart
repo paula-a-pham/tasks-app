@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:tasks/models/task_model/task_model.dart';
 
@@ -24,8 +23,8 @@ class CustomTask extends StatelessWidget {
         GestureDetector(
           onTap: onLeadingTab,
           child: Icon(
-            task.completed ? Icons.task_alt_rounded : Icons.circle_outlined,
-            color: task.completed ? Colors.green.shade600 : null,
+            task.status == 1 ? Icons.task_alt_rounded : Icons.circle_outlined,
+            color: task.status == 1 ? Colors.green.shade600 : null,
           ),
         ),
         const SizedBox(
@@ -45,16 +44,16 @@ class CustomTask extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 17.5,
                     fontWeight: FontWeight.w500,
-                    decoration: task.completed
+                    decoration: task.status == 1
                         ? TextDecoration.lineThrough
                         : TextDecoration.none,
-                    color: task.completed ? Colors.grey : Colors.black,
+                    color: task.status == 1 ? Colors.grey : Colors.black,
                   ),
                 ),
                 Text(
                   task.date!,
                   style: TextStyle(
-                    color: task.completed ? Colors.grey : Colors.black,
+                    color: task.status == 1 ? Colors.grey : Colors.black,
                   ),
                 ),
               ],
@@ -67,7 +66,7 @@ class CustomTask extends StatelessWidget {
         GestureDetector(
           onTap: onTrailingTab,
           child: Icon(
-            task.completed ? null : Icons.archive_rounded,
+            task.status == 1 ? null : Icons.archive_rounded,
           ),
         ),
       ],
