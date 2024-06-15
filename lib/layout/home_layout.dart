@@ -4,6 +4,7 @@ import 'package:tasks/models/task_model/task_model.dart';
 import 'package:tasks/modules/archived_tasks/archived_tasks_screen.dart';
 import 'package:tasks/modules/completed_tasks/completed_tasks_screen.dart';
 import 'package:tasks/modules/my_tasks/my_tasks_screen.dart';
+import 'package:tasks/shared/components/custom_snack_bar/custom_snack_bar.dart';
 import 'package:tasks/shared/cubit/task_cubit.dart';
 
 class HomeLayout extends StatefulWidget {
@@ -233,6 +234,8 @@ class _HomeLayoutState extends State<HomeLayout> with TickerProviderStateMixin {
                                     date = null;
                                     time = null;
                                     Navigator.pop(context);
+                                    customSnackBar(
+                                        context, 'Task Created Successfully.');
                                   });
                                 }
                               : () {},

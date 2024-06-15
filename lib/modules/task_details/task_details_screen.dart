@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasks/models/task_model/task_model.dart';
+import 'package:tasks/shared/components/custom_snack_bar/custom_snack_bar.dart';
 import 'package:tasks/shared/components/task_details_row_item/task_details_row_item.dart';
 import 'package:tasks/shared/cubit/task_cubit.dart';
 
@@ -18,6 +19,8 @@ class TaskDetailsScreen extends StatelessWidget {
                 onTap: () {
                   TaskCubit.getCubit(context).deleteTask(task.id!);
                   Navigator.pop(context);
+                  customSnackBar(
+                                        context, 'Task Deleted.');
                 },
                 child: const Text('Delete'),
               ),
@@ -77,6 +80,8 @@ class TaskDetailsScreen extends StatelessWidget {
                     onPressed: () {
                       TaskCubit.getCubit(context).updateTask(task.id!, 1);
                       Navigator.pop(context);
+                      customSnackBar(
+                                        context, 'Task Completed.');
                     },
                     child: const Text('Mark as complete'),
                   ),

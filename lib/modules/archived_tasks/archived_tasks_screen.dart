@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks/shared/components/custom_list_view/custom_list_view.dart';
+import 'package:tasks/shared/components/custom_snack_bar/custom_snack_bar.dart';
 import 'package:tasks/shared/cubit/task_cubit.dart';
 
 class ArchivedTasksScreen extends StatelessWidget {
@@ -24,11 +25,15 @@ class ArchivedTasksScreen extends StatelessWidget {
                     TaskCubit.getCubit(context).updateTask(
                         TaskCubit.getCubit(context).archivedTasks[index].id!,
                         1);
+                        customSnackBar(
+                                        context, 'Task Completed.');
                   },
                   onTrailingTab: (index) {
                     TaskCubit.getCubit(context).updateTask(
                         TaskCubit.getCubit(context).archivedTasks[index].id!,
                         0);
+                        customSnackBar(
+                                        context, 'Task Not Archived.');
                   },
                 ),
               );

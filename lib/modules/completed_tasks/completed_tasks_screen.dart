@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks/shared/components/custom_list_view/custom_list_view.dart';
+import 'package:tasks/shared/components/custom_snack_bar/custom_snack_bar.dart';
 import 'package:tasks/shared/cubit/task_cubit.dart';
 
 class CompletedTasksScreen extends StatelessWidget {
@@ -22,6 +23,8 @@ class CompletedTasksScreen extends StatelessWidget {
                   tasks: TaskCubit.getCubit(context).completedTasks,
                   onLeadingTab: (index) {
                     TaskCubit.getCubit(context).updateTask(TaskCubit.getCubit(context).completedTasks[index].id!, 0);
+                    customSnackBar(
+                                        context, 'Task Marked Uncompleted.');
                   },
                   onTrailingTab: (index) {},
                 ),
