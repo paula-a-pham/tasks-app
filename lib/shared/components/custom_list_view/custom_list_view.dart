@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasks/models/task_model/task_model.dart';
+import 'package:tasks/modules/task_details/task_details_screen.dart';
 import 'package:tasks/shared/components/custom_task/custom_task.dart';
 
 class CustomListView extends StatelessWidget {
@@ -21,7 +22,15 @@ class CustomListView extends StatelessWidget {
               onLeadingTab: () {
                 onLeadingTab(index);
               },
-              onTaskTab: () {},
+              onTaskTab: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        TaskDetailsScreen(task: _tasks[index]),
+                  ),
+                );
+              },
               onTrailingTab: () {
                 onTrailingTab(index);
               },
