@@ -20,8 +20,16 @@ class ArchivedTasksScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(25.0),
                 child: CustomListView(
                   tasks: TaskCubit.getCubit(context).archivedTasks,
-                  onLeadingTab: (index) {},
-                  onTrailingTab: (index) {},
+                  onLeadingTab: (index) {
+                    TaskCubit.getCubit(context).updateTask(
+                        TaskCubit.getCubit(context).archivedTasks[index].id!,
+                        1);
+                  },
+                  onTrailingTab: (index) {
+                    TaskCubit.getCubit(context).updateTask(
+                        TaskCubit.getCubit(context).archivedTasks[index].id!,
+                        0);
+                  },
                 ),
               );
       },

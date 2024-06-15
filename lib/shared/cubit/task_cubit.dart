@@ -55,4 +55,15 @@ class TaskCubit extends Cubit<TaskState> {
       },
     );
   }
+
+  void updateTask(int id, int status) {
+    DatabaseHelper.updateTask(id, status).then(
+      (value) {
+        emit(
+          TaskUpdated(),
+        );
+        getTasks();
+      },
+    );
+  }
 }

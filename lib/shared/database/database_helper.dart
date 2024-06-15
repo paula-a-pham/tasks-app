@@ -108,4 +108,21 @@ class DatabaseHelper {
     }
     return [];
   }
+
+  static Future<void> updateTask(int id, int status) async {
+    try {
+      final db = await _getDatabase();
+      await db!.rawUpdate(
+        'UPDATE $_tableName SET status = ? WHERE id = ?',
+        [status, id],
+      );
+      if (kDebugMode) {
+        print('Database update completed successfully.\n');
+      }
+    } catch (error) {
+      if (kDebugMode) {
+        print('Database update error : $error \n');
+      }
+    }
+  }
 }

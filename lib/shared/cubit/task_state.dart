@@ -9,3 +9,5 @@ final class TaskFetch extends TaskState {}
 final class TaskReload extends TaskState {}
 
 final class TaskInserted extends TaskState {}
+
+final class TaskUpdated extends TaskState {}

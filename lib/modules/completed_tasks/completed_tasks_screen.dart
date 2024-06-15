@@ -20,7 +20,9 @@ class CompletedTasksScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(25.0),
                 child: CustomListView(
                   tasks: TaskCubit.getCubit(context).completedTasks,
-                  onLeadingTab: (index) {},
+                  onLeadingTab: (index) {
+                    TaskCubit.getCubit(context).updateTask(TaskCubit.getCubit(context).completedTasks[index].id!, 0);
+                  },
                   onTrailingTab: (index) {},
                 ),
               );

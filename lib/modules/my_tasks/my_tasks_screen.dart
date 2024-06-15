@@ -20,8 +20,12 @@ class MyTasksScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(25.0),
                 child: CustomListView(
                   tasks: TaskCubit.getCubit(context).myTasks,
-                  onLeadingTab: (index) {},
-                  onTrailingTab: (index) {},
+                  onLeadingTab: (index) {
+                    TaskCubit.getCubit(context).updateTask(TaskCubit.getCubit(context).myTasks[index].id!, 1);
+                  },
+                  onTrailingTab: (index) {
+                    TaskCubit.getCubit(context).updateTask(TaskCubit.getCubit(context).myTasks[index].id!, 2);
+                  },
                 ),
               );
       },
