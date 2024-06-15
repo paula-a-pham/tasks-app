@@ -50,10 +50,13 @@ class CustomTask extends StatelessWidget {
                     color: task.status == 1 ? Colors.grey : Colors.black,
                   ),
                 ),
-                Text(
-                  task.date!,
-                  style: TextStyle(
-                    color: task.status == 1 ? Colors.grey : Colors.black,
+                Visibility(
+                  visible: task.date != null ? true : false,
+                  child: Text(
+                    task.date ?? '',
+                    style: TextStyle(
+                      color: task.status == 1 ? Colors.grey : Colors.black,
+                    ),
                   ),
                 ),
               ],

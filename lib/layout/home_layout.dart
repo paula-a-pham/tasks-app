@@ -4,7 +4,7 @@ import 'package:tasks/models/task_model/task_model.dart';
 import 'package:tasks/modules/archived_tasks/archived_tasks_screen.dart';
 import 'package:tasks/modules/completed_tasks/completed_tasks_screen.dart';
 import 'package:tasks/modules/my_tasks/my_tasks_screen.dart';
-import 'package:tasks/shared/database/database_helper.dart';
+import 'package:tasks/shared/cubit/task_cubit.dart';
 
 class HomeLayout extends StatefulWidget {
   const HomeLayout({super.key});
@@ -63,10 +63,10 @@ class _HomeLayoutState extends State<HomeLayout> with TickerProviderStateMixin {
       ),
       body: TabBarView(
         controller: _tabController,
-        children: <Widget>[
+        children: const <Widget>[
           MyTasksScreen(),
-          const CompletedTasksScreen(),
-          const ArchivedTasksScreen(),
+          CompletedTasksScreen(),
+          ArchivedTasksScreen(),
         ],
       ),
       floatingActionButton: _tabController.index == 0
@@ -214,7 +214,28 @@ class _HomeLayoutState extends State<HomeLayout> with TickerProviderStateMixin {
                           ],
                         ),
                         GestureDetector(
-                          onTap: enableSaveButton ? () {} : () {},
+                          onTap: enableSaveButton
+                              ? () {
+                                  setState(() {
+                                    TaskCubit.getCubit(context).insertTask(
+                                      TaskModel(
+                                          name: nameController.text,
+                                          description:
+                                              descriptionController.text.isEmpty
+                                                  ? null
+                                                  : descriptionController.text,
+                                          date: date,
+                                          time: time,
+                                          status: 0),
+                                    );
+                                    nameController.clear();
+                                    descriptionController.clear();
+                                    date = null;
+                                    time = null;
+                                    Navigator.pop(context);
+                                  });
+                                }
+                              : () {},
                           child: Text(
                             'Add',
                             textAlign: TextAlign.end,
