@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:tasks/models/task_model/task_model.dart';
 import 'package:tasks/modules/archived_tasks/archived_tasks_screen.dart';
 import 'package:tasks/modules/completed_tasks/completed_tasks_screen.dart';
 import 'package:tasks/modules/my_tasks/my_tasks_screen.dart';
+import 'package:tasks/shared/database/database_helper.dart';
 
 class HomeLayout extends StatefulWidget {
   const HomeLayout({super.key});
@@ -16,8 +19,8 @@ class _HomeLayoutState extends State<HomeLayout> with TickerProviderStateMixin {
   bool enableSaveButton = false;
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  DateTime? date;
-  TimeOfDay? time;
+  String? date;
+  String? time;
 
   @override
   void initState() {
@@ -173,7 +176,11 @@ class _HomeLayoutState extends State<HomeLayout> with TickerProviderStateMixin {
                                   lastDate: DateTime(DateTime.now().year + 1),
                                   initialDate: DateTime.now(),
                                 ).then(
-                                  (value) => date = value,
+                                  (value) {
+                                    if (value != null) {
+                                      date = DateFormat.MMMEd().format(value);
+                                    }
+                                  },
                                 );
                               },
                               child: const Icon(
@@ -189,7 +196,15 @@ class _HomeLayoutState extends State<HomeLayout> with TickerProviderStateMixin {
                                   context: context,
                                   initialTime: TimeOfDay.now(),
                                 ).then(
-                                  (value) => time = value,
+                                  (value) {
+                                    if (value != null) {
+                                      final now = DateTime.now();
+                                      time = DateFormat.jm().format(
+                                        DateTime(now.year, now.month, now.day,
+                                            value.hour, value.minute),
+                                      );
+                                    }
+                                  },
                                 );
                               },
                               child: const Icon(
@@ -199,7 +214,7 @@ class _HomeLayoutState extends State<HomeLayout> with TickerProviderStateMixin {
                           ],
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: enableSaveButton ? () {} : () {},
                           child: Text(
                             'Add',
                             textAlign: TextAlign.end,

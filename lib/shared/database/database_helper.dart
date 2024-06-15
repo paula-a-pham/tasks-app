@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:tasks/models/task_model/task_model.dart';
 
 class DatabaseHelper {
   static Database? _database;
@@ -61,6 +62,23 @@ class DatabaseHelper {
     } catch (error) {
       if (kDebugMode) {
         print('Database close error : $error \n');
+      }
+    }
+  }
+
+  static Future<void> insertNewTask(TaskModel task) async {
+    try {
+      final db = await _getDatabase();
+      await db!.insert(
+        _tableName,
+        task.toMap(),
+      );
+      if (kDebugMode) {
+        print('Database insert completed successfully.\n');
+      }
+    } catch (error) {
+      if (kDebugMode) {
+        print('Database insert error : $error \n');
       }
     }
   }
