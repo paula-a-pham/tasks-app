@@ -82,4 +82,30 @@ class DatabaseHelper {
       }
     }
   }
+
+  static Future<List<TaskModel>> getTasksList(int status) async {
+    try {
+      final db = await _getDatabase();
+      List<Map<String, Object?>> tasks = await db!.query(
+        _tableName,
+        where: 'status = ?',
+        whereArgs: [status],
+      );
+      if (kDebugMode) {
+        print('Database get completed successfully.\n');
+      }
+      return tasks.isNotEmpty
+          ? tasks
+              .map(
+                (e) => TaskModel.fromMap(e),
+              )
+              .toList()
+          : [];
+    } catch (error) {
+      if (kDebugMode) {
+        print('Database get error : $error \n');
+      }
+    }
+    return [];
+  }
 }
