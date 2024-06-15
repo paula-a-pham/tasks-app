@@ -11,3 +11,4 @@ final class TaskReload extends TaskState {}
 final class TaskInserted extends TaskState {}
 
 final class TaskUpdated extends TaskState {}
+final class TaskDeleted extends TaskState {}

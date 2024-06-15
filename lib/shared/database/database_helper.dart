@@ -125,4 +125,22 @@ class DatabaseHelper {
       }
     }
   }
+
+  static Future<void> deleteTask(int id) async {
+    try {
+      final db = await _getDatabase();
+      await db!.delete(
+        _tableName,
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+      if (kDebugMode) {
+        print('Database delete completed successfully.\n');
+      }
+    } catch (error) {
+      if (kDebugMode) {
+        print('Database delete error : $error \n');
+      }
+    }
+  }
 }

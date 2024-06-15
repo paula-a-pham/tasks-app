@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tasks/models/task_model/task_model.dart';
 import 'package:tasks/shared/components/task_details_row_item/task_details_row_item.dart';
+import 'package:tasks/shared/cubit/task_cubit.dart';
 
 class TaskDetailsScreen extends StatelessWidget {
   final TaskModel task;
@@ -14,7 +15,10 @@ class TaskDetailsScreen extends StatelessWidget {
           PopupMenuButton(
             itemBuilder: (context) => [
               PopupMenuItem(
-                onTap: () {},
+                onTap: () {
+                  TaskCubit.getCubit(context).deleteTask(task.id!);
+                  Navigator.pop(context);
+                },
                 child: const Text('Delete'),
               ),
             ],
@@ -70,7 +74,10 @@ class TaskDetailsScreen extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: FilledButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      TaskCubit.getCubit(context).updateTask(task.id!, 1);
+                      Navigator.pop(context);
+                    },
                     child: const Text('Mark as complete'),
                   ),
                 ),

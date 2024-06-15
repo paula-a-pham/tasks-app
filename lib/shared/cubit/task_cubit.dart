@@ -66,4 +66,15 @@ class TaskCubit extends Cubit<TaskState> {
       },
     );
   }
+
+  void deleteTask(int id) {
+    DatabaseHelper.deleteTask(id).then(
+      (value) {
+        emit(
+          TaskDeleted(),
+        );
+        getTasks();
+      },
+    );
+  }
 }
