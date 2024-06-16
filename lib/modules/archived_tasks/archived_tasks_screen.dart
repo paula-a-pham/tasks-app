@@ -17,26 +17,33 @@ class ArchivedTasksScreen extends StatelessWidget {
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : Padding(
-                padding: const EdgeInsets.all(25.0),
-                child: CustomListView(
-                  tasks: TaskCubit.getCubit(context).archivedTasks,
-                  onLeadingTab: (index) {
-                    TaskCubit.getCubit(context).updateTask(
-                        TaskCubit.getCubit(context).archivedTasks[index].id!,
-                        1);
-                        customSnackBar(
-                                        context, 'Task Completed.');
-                  },
-                  onTrailingTab: (index) {
-                    TaskCubit.getCubit(context).updateTask(
-                        TaskCubit.getCubit(context).archivedTasks[index].id!,
-                        0);
-                        customSnackBar(
-                                        context, 'Task Not Archived.');
-                  },
-                ),
-              );
+            : TaskCubit.getCubit(context).archivedTasks.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.all(25.0),
+                    child: CustomListView(
+                      tasks: TaskCubit.getCubit(context).archivedTasks,
+                      onLeadingTab: (index) {
+                        TaskCubit.getCubit(context).updateTask(
+                            TaskCubit.getCubit(context)
+                                .archivedTasks[index]
+                                .id!,
+                            1);
+                        customSnackBar(context, 'Task Completed.');
+                      },
+                      onTrailingTab: (index) {
+                        TaskCubit.getCubit(context).updateTask(
+                            TaskCubit.getCubit(context)
+                                .archivedTasks[index]
+                                .id!,
+                            0);
+                        customSnackBar(context, 'Task Not Archived.');
+                      },
+                    ),
+                  )
+                : const Icon(
+                    Icons.archive_rounded,
+                    size: 50.0,
+                  );
       },
     );
   }

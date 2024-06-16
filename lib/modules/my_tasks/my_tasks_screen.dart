@@ -17,22 +17,27 @@ class MyTasksScreen extends StatelessWidget {
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : Padding(
-                padding: const EdgeInsets.all(25.0),
-                child: CustomListView(
-                  tasks: TaskCubit.getCubit(context).myTasks,
-                  onLeadingTab: (index) {
-                    TaskCubit.getCubit(context).updateTask(TaskCubit.getCubit(context).myTasks[index].id!, 1);
-                    customSnackBar(
-                                        context, 'Task Completed.');
-                  },
-                  onTrailingTab: (index) {
-                    TaskCubit.getCubit(context).updateTask(TaskCubit.getCubit(context).myTasks[index].id!, 2);
-                    customSnackBar(
-                                        context, 'Task Archived.');
-                  },
-                ),
-              );
+            : TaskCubit.getCubit(context).myTasks.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.all(25.0),
+                    child: CustomListView(
+                      tasks: TaskCubit.getCubit(context).myTasks,
+                      onLeadingTab: (index) {
+                        TaskCubit.getCubit(context).updateTask(
+                            TaskCubit.getCubit(context).myTasks[index].id!, 1);
+                        customSnackBar(context, 'Task Completed.');
+                      },
+                      onTrailingTab: (index) {
+                        TaskCubit.getCubit(context).updateTask(
+                            TaskCubit.getCubit(context).myTasks[index].id!, 2);
+                        customSnackBar(context, 'Task Archived.');
+                      },
+                    ),
+                  )
+                : const Icon(
+                    Icons.menu,
+                    size: 50.0,
+                  );
       },
     );
   }

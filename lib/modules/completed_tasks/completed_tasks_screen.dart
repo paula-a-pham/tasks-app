@@ -17,18 +17,26 @@ class CompletedTasksScreen extends StatelessWidget {
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : Padding(
-                padding: const EdgeInsets.all(25.0),
-                child: CustomListView(
-                  tasks: TaskCubit.getCubit(context).completedTasks,
-                  onLeadingTab: (index) {
-                    TaskCubit.getCubit(context).updateTask(TaskCubit.getCubit(context).completedTasks[index].id!, 0);
-                    customSnackBar(
-                                        context, 'Task Marked Uncompleted.');
-                  },
-                  onTrailingTab: (index) {},
-                ),
-              );
+            : TaskCubit.getCubit(context).completedTasks.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.all(25.0),
+                    child: CustomListView(
+                      tasks: TaskCubit.getCubit(context).completedTasks,
+                      onLeadingTab: (index) {
+                        TaskCubit.getCubit(context).updateTask(
+                            TaskCubit.getCubit(context)
+                                .completedTasks[index]
+                                .id!,
+                            0);
+                        customSnackBar(context, 'Task Marked Uncompleted.');
+                      },
+                      onTrailingTab: (index) {},
+                    ),
+                  )
+                : const Icon(
+                    Icons.task_alt_rounded,
+                    size: 50.0,
+                  );
       },
     );
   }
